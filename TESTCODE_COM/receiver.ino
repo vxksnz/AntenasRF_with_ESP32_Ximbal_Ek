@@ -1,4 +1,3 @@
-
 #define RXD2 16
 #define TXD2 17
 
@@ -10,9 +9,9 @@ int keyPos[10];
 String msg;
 String txId;
 String dataLen;
-String value1;
-String value2;
-String value3;
+String V1;
+String V2;
+String V3;
 String rssi;
 String snr;
 
@@ -91,18 +90,18 @@ void processMessage(String message) {
 
   txId = message.substring(5, keyPos[1]);
   dataLen = message.substring(keyPos[1] + 1, keyPos[2]);
-  value1 = message.substring(keyPos[2] + 1, keyPos[3]);
-  value2 = message.substring(keyPos[3] + 1, keyPos[4]);
-  value3 = message.substring(keyPos[4] + 1, keyPos[5]);
+  V1 = message.substring(keyPos[2] + 1, keyPos[3]);
+  V2 = message.substring(keyPos[3] + 1, keyPos[4]);
+  V3 = message.substring(keyPos[4] + 1, keyPos[5]);
   rssi = message.substring(keyPos[5] + 1, keyPos[6]);
   snr = message.substring(keyPos[6] + 1);
 
   Serial.println("Mensaje recibido: " + message);
   Serial.println("TxId: " + txId);
   Serial.println(" Length: " + dataLen);
-  Serial.println(" Value 1: " + value1);
-  Serial.println(" Value 2: " + value2);
-  Serial.println(" Value 3: " + value3);
+  Serial.println(" V1: " + value1);
+  Serial.println(" V2: " + value2);
+  Serial.println(" V3: " + value3);
   Serial.println(" RSSI: " + rssi);
   Serial.println(" SNR: " + snr);
 
