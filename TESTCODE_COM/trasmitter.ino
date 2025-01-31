@@ -1,20 +1,22 @@
-#define RXD1 18
+
+#define RXD1 16
 #define TXD1 17
 
 int V1, V2, V3;
 
+// Definición de las funciones antes de setup()
 void sendCmd(String cmd) {
-  Serial1.println(cmd);
-  unsigned long timeout = millis() + 2000;
-  while (!Serial1.available() && millis() < timeout) {
+  Serial2.println(cmd);
+  unsigned long timeout = millis() + 100;
+  while (!Serial2.available() && millis() < timeout) {
     delay(10);
   }
 }
 
 void checkResponse(String expected, String errorMsg, bool showResponse = false) {
   String response = "";
-  while (Serial1.available()) {
-    response += char(Serial1.read());
+  while (Serial2.available()) {
+    response += char(Serial2.read());
     delay(10);
   }
 
@@ -30,7 +32,7 @@ void checkResponse(String expected, String errorMsg, bool showResponse = false) 
 
 void setup() {
   Serial.begin(115200);
-  Serial1.begin(115200, SERIAL_8N1, RXD1, TXD1);
+  Serial2.begin(115200, SERIAL_8N1, RXD1, TXD1);
   Serial.println("Configurando parámetros antena LoRa");
   delay(1000);
 
@@ -60,5 +62,5 @@ void loop() {
   sendCmd("AT+SEND=2," + String(data.length()) + "," + data);
   checkResponse("+OK", "ERROR_SEND");
 
-  delay(5000);
+  delay(1500);
 }
