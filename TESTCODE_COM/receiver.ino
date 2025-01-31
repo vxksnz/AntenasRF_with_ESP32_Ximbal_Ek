@@ -1,4 +1,4 @@
-#define RXD2 16
+#define RXD2 18
 #define TXD2 17
 
 int varInMsg = 7; 
@@ -22,7 +22,7 @@ void processMessage(String message);
 
 void setup() {
   Serial.begin(115200); 
-  Serial2.begin(115200, SERIAL_8N1, RXD2, TXD2);  
+  Serial1.begin(115200, SERIAL_8N1, RXD2, TXD2);  
   Serial.println("Configurando parámetros antena LoRa");
   delay(1000);
 
@@ -45,8 +45,8 @@ void setup() {
 }
 
 void loop() {
-  while (Serial2.available()) {
-    msg = Serial2.readString();  
+  while (Serial1.available()) {
+    msg = Serial1.readString();  
     msg.trim(); 
 
     if (msg.length() > 0) {
@@ -57,9 +57,9 @@ void loop() {
 
 // Definición de la función sendCmd
 void sendCmd(String cmd) {
-  Serial2.println(cmd); 
-  unsigned long timeout = millis() + 2000;
-  while (!Serial2.available() && millis() < timeout) {
+  Serial1.println(cmd); 
+  unsigned long timeout = millis() + 100;
+  while (!Serial1.available() && millis() < timeout) {
     delay(10);  
   }
 }
@@ -67,8 +67,8 @@ void sendCmd(String cmd) {
 
 void checkResponse(String expected, String errorMsg, bool showResponse) {
   String response = "";
-  while (Serial2.available()) {
-    response += char(Serial2.read());
+  while (Serial1.available()) {
+    response += char(Serial1.read());
     delay(10);
   }
 
@@ -99,9 +99,9 @@ void processMessage(String message) {
   Serial.println("Mensaje recibido: " + message);
   Serial.println("TxId: " + txId);
   Serial.println(" Length: " + dataLen);
-  Serial.println(" V1: " + value1);
-  Serial.println(" V2: " + value2);
-  Serial.println(" V3: " + value3);
+  Serial.println(" V1: " + V1);
+  Serial.println(" V2: " + V2);
+  Serial.println(" V3: " + V3);
   Serial.println(" RSSI: " + rssi);
   Serial.println(" SNR: " + snr);
 
