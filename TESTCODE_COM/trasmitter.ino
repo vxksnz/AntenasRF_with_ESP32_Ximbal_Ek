@@ -3,31 +3,8 @@
 
 int V1, V2, V3;
 
-// Definición de las funciones antes de setup()
-void sendCmd(String cmd) {
-  Serial2.println(cmd);
-  unsigned long timeout = millis() + 100;
-  while (!Serial2.available() && millis() < timeout) {
-    delay(10);
-  }
-}
-
-void checkResponse(String expected, String errorMsg, bool showResponse = false) {
-  String response = "";
-  while (Serial2.available()) {
-    response += char(Serial2.read());
-    delay(10);
-  }
-
-  if (response.indexOf(expected) != -1) {
-    Serial.println("OK");
-  } else {
-    Serial.println(errorMsg);
-    if (showResponse) {
-      Serial.println("Respuesta recibida: " + response);
-    }
-  }
-}
+void sendCmd(String cmd);
+void checkResponse(String expected, String errorMsg, bool showResponse = false);
 
 void setup() {
   Serial.begin(115200);
@@ -63,3 +40,31 @@ void loop() {
 
   delay(1500);
 }
+
+// Definición de las funciones antes de setup()
+void sendCmd(String cmd) {
+  Serial2.println(cmd);
+  unsigned long timeout = millis() + 100;
+  while (!Serial2.available() && millis() < timeout) {
+    delay(10);
+  }
+}
+
+void checkResponse(String expected, String errorMsg, bool showResponse = false) {
+  String response = "";
+  while (Serial2.available()) {
+    response += char(Serial2.read());
+    delay(10);
+  }
+
+  if (response.indexOf(expected) != -1) {
+    Serial.println("OK");
+  } else {
+    Serial.println(errorMsg);
+    if (showResponse) {
+      Serial.println("Respuesta recibida: " + response);
+    }
+  }
+}
+
+
